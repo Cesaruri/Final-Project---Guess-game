@@ -1,0 +1,2497 @@
+//Start Button Class
+
+var Button = function(config) {
+    this.x = config.x || 0;
+    this.y = config.y || 0;
+    this.width = config.width || 200;
+    this.height = config.height || 50;
+    this.label = config.label || "Click";
+    this.onClick = config.onClick || function() {};
+};
+
+Button.prototype.draw = function() {
+    fill(0, 234, 255);
+    rect(this.x, this.y, this.width, this.height, 5);
+    fill(0, 0, 0);
+    textSize(20);
+    textAlign(LEFT, CENTER);
+    text(this.label, this.x+10, this.y+this.height/2);
+};
+
+Button.prototype.isMouseInside = function() {
+    return mouseX > this.x &&
+           mouseX < (this.x + this.width) &&
+           mouseY > this.y &&
+           mouseY < (this.y + this.height);
+};
+
+Button.prototype.handleMouseClick = function() {
+    if (this.isMouseInside()) {
+        this.onClick();
+    }
+};
+
+//Bitmoji Function
+var drawBitmoji  = function (bitmojiX, bitmojiY,bitmojiHeight){
+    noStroke();
+    
+    fill(86, 95, 222);
+    quad(bitmojiX-98*(bitmojiHeight/100),bitmojiY+113*(bitmojiHeight/100),bitmojiX+112*(bitmojiHeight/100),bitmojiY+113*(bitmojiHeight/100),bitmojiX+55*(bitmojiHeight/100),bitmojiY+31*(bitmojiHeight/100),bitmojiX-50*(bitmojiHeight/100),bitmojiY+31*(bitmojiHeight/100)); //t-shirt
+
+
+
+    fill(86, 95, 222);
+    arc(bitmojiX-41*(bitmojiHeight/100),bitmojiY+61*(bitmojiHeight/100),47*(bitmojiHeight/100),40*(bitmojiHeight/100),0,360); //left chisel t-shirt
+    arc(bitmojiX+41*(bitmojiHeight/100),bitmojiY+61*(bitmojiHeight/100),62*(bitmojiHeight/100),46*(bitmojiHeight/100),0,360); //right chisel t-shirt
+
+    textSize(50*(bitmojiHeight/100));
+    fill(0, 0, 0);
+    text("CF", bitmojiX-33*(bitmojiHeight/100),bitmojiY+85*(bitmojiHeight/100));
+
+
+
+    noStroke();
+    fill (122, 89, 54);
+    ellipse(bitmojiX,bitmojiY,89*(bitmojiHeight/100),100*(bitmojiHeight/100)); //head
+    
+    fill(0, 0, 0);
+    arc(bitmojiX-2*(bitmojiHeight/100),bitmojiY-41*(bitmojiHeight/100),83*(bitmojiHeight/100),61*(bitmojiHeight/100),180,360); //hair
+    arc(bitmojiX+31*(bitmojiHeight/100),bitmojiY-30*(bitmojiHeight/100),32*(bitmojiHeight/100),55*(bitmojiHeight/100),-148,44); //right hair
+    arc(bitmojiX-35*(bitmojiHeight/100),bitmojiY-30*(bitmojiHeight/100),32*(bitmojiHeight/100),55*(bitmojiHeight/100),122,326); //left hair
+    
+    strokeWeight(4);
+    stroke(247, 8, 8);
+    fill(69, 53, 69); 
+    arc(bitmojiX-2*(bitmojiHeight/100),bitmojiY-41*(bitmojiHeight/100),92*(bitmojiHeight/100),73*(bitmojiHeight/100),180,360); //Hat
+    bezier(bitmojiX+22*(bitmojiHeight/100), bitmojiY-42*(bitmojiHeight/100), bitmojiX+36*(bitmojiHeight/100), bitmojiY-43*(bitmojiHeight/100), bitmojiX-10*(bitmojiHeight/100),bitmojiY-4*(bitmojiHeight/100),bitmojiX-25*(bitmojiHeight/100),bitmojiY-41*(bitmojiHeight/100)); //Hat
+
+    stroke(0,0,0);
+    strokeWeight(2);
+    line(bitmojiX+13*(bitmojiHeight/100),bitmojiY+21*(bitmojiHeight/100),bitmojiX-16*(bitmojiHeight/100),bitmojiY+21*(bitmojiHeight/100)); // Mustache
+    
+    noStroke();
+    fill (255, 255, 255);
+    arc(bitmojiX-1*(bitmojiHeight/100),bitmojiY+23*(bitmojiHeight/100),31*(bitmojiHeight/100),20*(bitmojiHeight/100),0,180); //mouth
+    
+    fill (0, 0, 0);
+    arc(bitmojiX,bitmojiY+46*(bitmojiHeight/100),31*(bitmojiHeight/100),20*(bitmojiHeight/100),0,180); //goatee
+    
+    stroke(0,0,0);
+    fill (122, 89, 54);
+    bezier(bitmojiX, bitmojiY, bitmojiX-9*(bitmojiHeight/100), bitmojiY-15*(bitmojiHeight/100), bitmojiX+36*(bitmojiHeight/100),bitmojiY+13*(bitmojiHeight/100),bitmojiX-7*(bitmojiHeight/100),bitmojiY+9*(bitmojiHeight/100)); //nose
+
+    noStroke();
+    strokeWeight(2);
+    stroke(0,0,0);
+    fill (255, 255, 255);
+    ellipse(bitmojiX-20*(bitmojiHeight/100),bitmojiY-11*(bitmojiHeight/100),18*(bitmojiHeight/100),11*(bitmojiHeight/100)); //left glass
+    ellipse(bitmojiX+15*(bitmojiHeight/100),bitmojiY-11*(bitmojiHeight/100),18*(bitmojiHeight/100),11*(bitmojiHeight/100)); //right glass
+    
+    line(bitmojiX-29*(bitmojiHeight/100),bitmojiY-12*(bitmojiHeight/100),bitmojiX-44*(bitmojiHeight/100),bitmojiY-8*(bitmojiHeight/100)); //left frame
+    line(bitmojiX+24*(bitmojiHeight/100),bitmojiY-12*(bitmojiHeight/100),bitmojiX+44*(bitmojiHeight/100),bitmojiY-8*(bitmojiHeight/100)); //right frame
+    line(bitmojiX+5*(bitmojiHeight/100),bitmojiY-12*(bitmojiHeight/100),bitmojiX-12*(bitmojiHeight/100),bitmojiY-12*(bitmojiHeight/100)); //center frame
+    
+    
+    fill (51, 46, 43);
+    ellipse(bitmojiX-20*(bitmojiHeight/100),bitmojiY-11*(bitmojiHeight/100),5*(bitmojiHeight/100),5*(bitmojiHeight/100)); //left eye
+    ellipse(bitmojiX+15*(bitmojiHeight/100),bitmojiY-11*(bitmojiHeight/100),5*(bitmojiHeight/100),5*(bitmojiHeight/100)); //right eye
+
+}; 
+
+//Flags Desing
+var RepDom = function(x,y) {
+    strokeWeight(2);
+    fill(255, 255, 255);
+    rect(x,y,325,225); //White Cross
+    
+    fill(25, 34, 204);
+    rect(x+175,y+125,150,100); //Right-bottom Blue
+    rect(x,y,150,100); //Left-top Blue
+    
+    fill(255, 0, 0);
+    rect(x+175,y,150,100); //Right-top Red
+    rect(x,y+125,150,100); //Left-bottom Red
+};
+
+var USA = function(x,y) {
+strokeWeight(2);
+
+    //Nested For Loop for the stripes of the flag
+    for(var a=0;a<7;a++){
+        fill(255, 0, 0);
+        rect(x,a*40+y,390,20); //Red Stripe
+            for(var b=0;b<6;b++){
+                fill(255, 255, 255);
+                rect(x,b*40+y+20,390,20); //White Stripe
+        }
+    }
+    fill(25, 34, 204);
+    rect(x,y,180,140); //Left-top Blue Box
+    
+    //For Loop used for the first row of starts
+    for(var c=0;c<6;c++){
+        for(var e=0;e<5;e++){
+    image(getImage("cute/Star"), c*30+x+5, e*30+y,20,20);
+    }
+    }
+    
+    //For Loop used for the second row of starts
+    for(var d=0;d<5;d++){
+        for(var f=0;f<4;f++){
+    image(getImage("cute/Star"), d*30+x+20, f*30+y+12,20,20);
+    }
+    
+    }
+};
+
+var Russia = function(x,y,flagsize){
+    strokeWeight(2);
+    fill(255, 255, 255); //White Stripe
+    rect(x*(flagsize/100),y+0*(flagsize/100),325*(flagsize/100),75*(flagsize/100));
+    fill(25, 34, 204);  //Blue Stripe
+    rect(x*(flagsize/100),y+75*(flagsize/100),325*(flagsize/100),75*(flagsize/100));
+    fill(255, 0, 0);   //Red Stripe
+    rect(x*(flagsize/100),y+150*(flagsize/100),325*(flagsize/100),75*(flagsize/100));
+};
+
+var Colombia = function(x,y,flagsize){
+    strokeWeight(2);
+    fill(247, 235, 3); //Yellow Stripe
+    rect(x*(flagsize/100),y+0*(flagsize/100),325*(flagsize/100),120*(flagsize/100));
+    fill(21, 29, 148); //Blue Stripe
+    rect(x*(flagsize/100),y+120*(flagsize/100),325*(flagsize/100),75*(flagsize/100));
+    fill(255, 0, 0); //Red Stripe
+    rect(x*(flagsize/100),y+195*(flagsize/100),325*(flagsize/100),75*(flagsize/100));
+};
+
+var Cuba = function(x,y){
+    strokeWeight(2);
+    
+    //For Loop used for the Blue Stripes of the flag
+    for (var a=0;a<3;a++){
+        fill(41, 14, 140);
+        rect(x,a*80+y+20,325,40);
+    }
+    
+    //For Loop used for the White Stripes of the flag
+    for (var a=0;a<2;a++){
+        fill(255, 255, 255);
+        rect(x,a*80+y+60,325,40);
+    }
+    
+    //Red Triangle and star
+    fill(224, 4, 4);
+    triangle(x, y+221, x, y+20, x+110, y+125);
+    image(getImage("space/star"),x-6,y+72);
+    
+    
+};
+
+var France = function(x,y,flagsize){
+    strokeWeight(2);
+    
+    fill(12, 10, 105); //Blue Stripe
+    rect(x+0*(flagsize/100),y*(flagsize/100),100*(flagsize/100),200*(flagsize/100));
+    
+    fill(255, 255, 255); //White Stripe
+    rect(x+100*(flagsize/100),y*(flagsize/100),100*(flagsize/100),200*(flagsize/100));
+    
+    fill(209, 16, 16); //Red Stripe
+    rect(x+200*(flagsize/100),y*(flagsize/100),100*(flagsize/100),200*(flagsize/100));
+};
+
+var Belgium = function(x,y,flagsize){
+    strokeWeight(2);
+    
+    fill(0, 0, 0); //Black Stripe
+    rect(x+0*(flagsize/100),y*(flagsize/100),80*(flagsize/100),200*(flagsize/100));
+    
+    fill(222, 215, 24);//Yellow Stripe
+    rect(x+80*(flagsize/100),y*(flagsize/100),80*(flagsize/100),200*(flagsize/100));
+    
+    fill(255, 25, 25); //Red Stripe
+    rect(x+160*(flagsize/100),y*(flagsize/100),80*(flagsize/100),200*(flagsize/100));
+};
+
+var Poland = function(x,y,flagsize){
+    strokeWeight(2);
+    
+    fill(255, 255, 255); //White Stripe
+    rect(x*(flagsize/100),y+0*(flagsize/100),350*(flagsize/100),120*(flagsize/100));
+    
+    fill(255, 8, 8);//Red Stripe
+    rect(x*(flagsize/100),y+120*(flagsize/100),350*(flagsize/100),120*(flagsize/100)); 
+};
+
+var Iraq = function(x,y){
+    strokeWeight(2);
+    
+    fill(255, 0, 0); //Red Stripe
+    rect(x,y,350,80);
+    
+    fill(255, 255, 255); //White Stripe
+    rect(x,y+80,350,80);
+    
+    fill(0, 0, 0); //Black Stripe
+    rect(x,y+160,350,80);
+    
+    //Green Letters on the flag
+    textSize(50);
+    fill(23, 87, 26);
+    text("الله أكبر",x+110,y+125);
+};
+
+var Liberia = function(x,y) {
+    strokeWeight(2);
+    
+    //Nested For Loop for the stripes of the flag
+    for(var a=0;a<6;a++){
+        fill(255, 0, 0);
+        rect(x,a*40+y,390,20); //Red Stripe
+            for(var b=0;b<5;b++){
+                fill(255, 255, 255);
+                rect(x,b*40+y+20,390,20); //White Stripe
+        }
+    }
+    fill(25, 34, 204);
+    rect(x,y,111,100); //Left-top Blue Box
+    image(getImage("cute/Star"),x+5,y-50);
+};
+
+var Romania = function(x,y,flagsize){
+    strokeWeight(2);
+    
+    fill(0, 39,128); //Blue Stripe
+    rect(x+0*(flagsize/100),y*(flagsize/100),100*(flagsize/100),200*(flagsize/100));
+    
+    fill(252, 210, 15); //Yellow Stripe
+    rect(x+100*(flagsize/100),y*(flagsize/100),100*(flagsize/100),200*(flagsize/100));
+    
+    fill(207, 9, 33); //Red Stripe
+    rect(x+200*(flagsize/100),y*(flagsize/100),100*(flagsize/100),200*(flagsize/100));
+};
+
+var Finland = function(x,y,flagsize){
+    strokeWeight(2);
+    
+    fill(255, 255, 255); ////White Square
+    rect(x+0*(flagsize/100),y*(flagsize/100),350*(flagsize/100),240*(flagsize/100));
+    
+    //Blue Cross
+    fill(0, 4, 115);
+    noStroke();
+    rect(x+100*(flagsize/100),y*(flagsize/100),60*(flagsize/100),240*(flagsize/100));
+    rect(x+0*(flagsize/100),y+90*(flagsize/100),350*(flagsize/100),60*(flagsize/100));
+    stroke(0, 0, 0);
+};
+
+var Ireland = function(x,y,flagsize){
+    strokeWeight(2);
+    
+    fill(22,155,98); //Green Stripe
+    rect(x+0*(flagsize/100),y*(flagsize/100),100*(flagsize/100),200*(flagsize/100));
+    
+    fill(255, 255, 255); //White Stripe
+    rect(x+100*(flagsize/100),y*(flagsize/100),100*(flagsize/100),200*(flagsize/100));
+    
+    fill(255, 136, 62); //Orange Stripe
+    rect(x+200*(flagsize/100),y*(flagsize/100),100*(flagsize/100),200*(flagsize/100));
+};
+
+var Armenia = function(x,y,flagsize){
+    strokeWeight(2);
+    
+    fill(217, 0, 18); //Red Stripe
+    rect(x*(flagsize/100),y+0*(flagsize/100),380*(flagsize/100),80*(flagsize/100));
+    
+    fill(0, 51, 160); //Blue Stripe
+    rect(x*(flagsize/100),y+80*(flagsize/100),380*(flagsize/100),80*(flagsize/100));
+    
+    fill(242, 168, 0); //Yellow Stripe
+    rect(x*(flagsize/100),y+160*(flagsize/100),380*(flagsize/100),80*(flagsize/100));
+};
+
+var Indonesia = function(x,y,flagsize){
+    strokeWeight(2);
+    
+    fill(255, 0, 0); //Red Stripe
+    rect(x*(flagsize/100),y+0*(flagsize/100),350*(flagsize/100),120*(flagsize/100));
+    
+    fill(255, 255, 255); //White Stripe
+    rect(x*(flagsize/100),y+120*(flagsize/100),350*(flagsize/100),120*(flagsize/100));
+};
+
+var Germany = function(x,y,flagsize){
+    strokeWeight(2);
+    
+    fill(0, 0, 0); //Black Stripe
+    rect(x*(flagsize/100),y+0*(flagsize/100),350*(flagsize/100),80*(flagsize/100));
+    
+    fill(255, 25, 25); //Red Stripe
+    rect(x*(flagsize/100),y+80*(flagsize/100),350*(flagsize/100),80*(flagsize/100));
+    
+    fill(255, 247, 10); //Yellow Stripe
+    rect(x*(flagsize/100),y+160*(flagsize/100),350*(flagsize/100),80*(flagsize/100));
+    
+};
+
+var Japan = function(x,y){
+    strokeWeight(2);
+    
+    fill(255, 255, 255);
+    rect(x,y,300,200); //White Square
+    
+    fill(255, 0, 0);
+    ellipse(x+150,y+100,120,120); //Red Circle
+};
+
+var IvoryCoast = function(x,y){
+    strokeWeight(2);
+    fill(255, 130, 0); //Orange Stripe
+    rect(x,y,100,200);
+    
+    fill(255, 255, 255); //White Stripe
+    rect(x+100,y,100,200);
+    
+    fill(0, 154, 68); //Green Stripe
+    rect(x+200,y,100,200);
+};
+
+var Peru = function(x,y){
+    strokeWeight(2);
+    
+    fill(255, 0, 0); //Red Stripes
+    rect(x,y,100,200); 
+    rect(x+200,y,100,200);
+    
+    fill(255, 255, 255); //White Stripe
+    rect(x+100,y,100,200);
+};
+
+var Laos = function(x,y,flagsize){
+    strokeWeight(2);
+    
+    fill(217, 0, 18); //Red Stripes
+    rect(x*(flagsize/100),y+0*(flagsize/100),380*(flagsize/100),80*(flagsize/100));
+    rect(x*(flagsize/100),y+160*(flagsize/100),380*(flagsize/100),80*(flagsize/100));
+    
+    fill(0, 51, 160); //Blue Stripe
+    rect(x*(flagsize/100),y+65*(flagsize/100),380*(flagsize/100),115*(flagsize/100));
+    
+    fill(255, 255, 255); //White Circle
+    ellipse(x+190*(flagsize/100),y+120*(flagsize/100),90*(flagsize/100),90*(flagsize/100));
+};
+
+
+//Array to store the name and flag of each country.
+var country = [
+    {name: "Dominican Republic", flag:RepDom,},
+    
+    {name: "United States",flag:USA,},
+    
+    {name: "Russia",flag:Russia,},
+    
+    {name: "Colombia",flag:Colombia,},
+    
+    {name: "Cuba",flag:Cuba,},
+    
+    {name: "France",flag:France,},
+    
+    {name: "Belgium",flag:Belgium,},
+    
+    {name: "Poland",flag:Poland,},
+    
+    {name: "Iraq",flag:Iraq,},
+    
+    {name: "Liberia",flag:Liberia,},
+    
+    {name: "Romania",flag:Romania,},
+    
+    {name: "Finland",flag:Finland,},
+    
+    {name: "Ireland",flag:Ireland,},
+    
+    {name: "Armenia",flag:Armenia,},
+    
+    {name: "Indonesia",flag:Indonesia,},
+    
+    {name: "Germany",flag:Germany,},
+    
+    {name: "Japan",flag:Japan,},
+    
+    {name: "IvoryCoast",flag:IvoryCoast,},
+    
+    {name: "Peru",flag:Peru,},
+    
+    {name: "Laos",flag:Laos,}
+    
+    ];
+    
+//Function for Correct Answer
+var correctAnswer = function (x,y){
+    fill(15, 168, 36);
+    textSize(30);
+    text("Correct!",415,430);
+};
+
+//Function for Incorrect Answer
+var incorrectAnswer = function (x,y){
+    fill(255, 0, 0);
+    textSize(30);
+    text("Incorrect!",415,430);
+};
+
+
+/*
+Algorithm for random selection of countries. Generates random number without repetition.
+
+The randomCountry function have a min and max argument.
+
+Inside the function the variable number1 gets the max minus the min plus one.
+
+The variable number2 gets the Math.random that returns a random number.
+
+The variable result gets the Math.floor method which rounds a number to the closest integer that is less than or equal to the value of the parameter number2 plus the min argument.
+*/
+var randomCountry=function(min,max){
+    var number1 = max - min + 1;
+    var number2 = Math.random() * number1;
+    var result = Math.floor(number2) + min;
+    return result;
+};
+
+
+/*
+A function used to push the start and end arguments.
+Inside an array called myArray is created.
+
+A for loop to push the start and end argument to the array
+
+*/
+var arrayCountry = function (start,end){
+    var myArray = [];
+    
+    for(var i =start;i<=end;i++){
+        myArray.push(i);
+    }
+    return myArray;
+};
+
+//A variable for the question and flag games are created. The variables numbersFlag and numbersQuestion gets the arrayCountry pushing the start and end arguments.
+var numbersFlag = arrayCountry(1,20);
+var numbersQuestion = arrayCountry(1,10);
+
+/*
+A variable called randomIndex gets 0 and 
+A variable called currentCountry gets 0.
+A variable called currentQuestion gets 0.
+
+Two iteration of the Button object have been created for the question and flag game. 
+*/
+
+//Variable to keep count of the index
+
+var randomIndex = 0;
+
+//Variable to keep count on the flag game
+var currentCountry = 0;
+
+//Variable to keep count on the question game
+var currentQuestion=0;
+
+//Next Button for Flag Game
+var nextButtonFlag = new Button({
+    x: 425,
+    y: 350,
+    width:90,
+    height:50,
+    label: "Next",
+    onClick: function() {
+        randomIndex = randomCountry(0,numbersFlag.length-1);
+        currentCountry = numbersFlag[randomIndex];
+        numbersFlag.splice(randomIndex,1); 
+    }
+    
+/*
+Inside onClick: function() in the nextButtonFlag object,
+we called the previously established variable randomIndex gets
+randomCountry function with 0 as min argument and the numbersFlag variable with the .length argument.
+
+The currentCountry variable gets the numbersFlag with the randomIndex variable as the index for the array.
+
+Then the numbersFlag with the .splice remove the randomIndex variable from the array.
+*/
+});
+
+//Next Button for Question Game
+var nextButtonQuestion = new Button({
+    x: 450,
+    y: 500,
+    width:90,
+    height:50,
+    label: "Next",
+    onClick: function() {
+        randomIndex = randomCountry(0,numbersQuestion.length-1);
+        currentQuestion = numbersQuestion[randomIndex];
+        numbersQuestion.splice(randomIndex,1); 
+    }
+    
+/*
+Inside onClick: function() in the nextButtonQuestion object,
+we called the previously establish variable randomIndex gets
+randomCountry function with 0 as min argument and the numbersQuestion variable with the .length argument.
+
+The currentQuestion variable gets the numbersQuestion with the randomIndex variable as the index for the array
+
+Then the numbersQuestion with the .splice removes the randomIndex variable from the array.
+*/    
+});
+
+//Restart Button
+var RestartButton = new Button({
+    x: 425,
+    y: 400,
+    width:90,
+    height:50,
+    label: "Restart",
+    onClick: function() {
+        numbersFlag = arrayCountry(1,20);
+        numbersQuestion = arrayCountry(1,10);
+        randomIndex = 0;
+        currentCountry = 0;
+        currentQuestion=0;
+        
+    }
+/*
+To restart the game a restart button was created and inside 
+the onClick: function() all of the variables are set to their original values.
+*/
+});
+
+//HistoryButton and FlagButton are only used in the Splashscreen
+
+//History Game Button in SplashScreen
+var HistoryButton = new Button({
+    x: 50,
+    y: 300,
+    width:145,
+    height:50,
+    label: "History Game",
+    onClick: function() {
+    //If statement for Button on SplashScreen
+        if (currentQuestion===0 && currentCountry===0 ){
+        randomIndex = randomCountry(0,numbersQuestion.length-1);
+        currentQuestion = numbersQuestion[randomIndex];
+        numbersQuestion.splice(randomIndex,1); 
+    }else{}
+        
+    }
+});
+
+//Flag Game Button in SplashScreen
+var FlagButton = new Button({
+    x: 350,
+    y: 300,
+    width:145,
+    height:50,
+    label: "Flag Game",
+    onClick: function() {
+        //If statement for Button on SplashScreen
+        if (currentCountry===0 && currentQuestion===0){
+        randomIndex = randomCountry(0,numbersFlag.length-1);
+        currentCountry = numbersFlag[randomIndex];
+        numbersFlag.splice(randomIndex,1);
+    }else{}
+    }
+});
+
+
+
+//Splash/Intro Screen
+var splashScreen= function(){
+background(212, 224, 42);
+textSize(30);
+fill(0, 0, 0);
+text("Guess Game",50,100);
+textSize(20);
+text("Challenge your knowledge!!",50,180);
+text("Guess the correct answer!",50,202); 
+text("Choose your game!",50,225); 
+text("Design by: Cesar Frias",50,570);
+drawBitmoji(110,490,60);
+HistoryButton.draw(); //History Game Button
+FlagButton.draw(); //Flag Game Button
+
+};
+
+//End Screen
+var endScreen= function(){
+    background(212, 224, 42);
+    textSize(30);
+    fill(0, 0, 0);
+    text("Thanks for playing",20,30);
+    drawBitmoji(110,145,60);
+    textSize(20);
+    text("To play again, press the Restart button.",20,305);
+    RestartButton.draw();
+};
+
+
+/*
+
+Each country is called using a function "[country name]Q".
+Q for question. Flag Game
+
+Inside the function the country is called using the country[index].flag element from the array.
+
+For the question game, the functions are named Question 1-10.
+
+New iterations of the button object are created for each of the answers displayed, using the country[index].name element in the flag game.
+
+If the answer is correct the correctAnswer function is called. 
+
+If the answer is incorrect the incorrectAnswer function is called. 
+
+Inside the main function the draw and handleMouseClick methods for the buttons are called
+
+
+
+*/
+
+
+
+var DOMQ = function(){
+    fill(11, 217, 200);
+    rect(50,0,500,600);
+    country[0].flag(145,20);
+    currentCountry=1;
+    
+    var Firstresponse = new Button({
+        x: 200,
+        y: 350,
+        label: country[0].name,
+        onClick: function() {
+           correctAnswer(450,450);
+            nextButtonFlag.draw();
+        },
+    });
+
+    var Secondresponse = new Button({
+        x: 200,
+        y: 410,
+        label: "Haiti",
+        onClick: function() {
+            incorrectAnswer(450,450);
+            nextButtonFlag.draw();
+        }
+    });
+
+    var Thirdresponse = new Button({
+        x: 200,
+        y: 470,
+        label: "Cuba",
+        onClick: function() {
+            incorrectAnswer(450,450);
+            nextButtonFlag.draw();
+        
+        }
+    });
+        Firstresponse.draw();
+        Secondresponse.draw();
+        Thirdresponse.draw();
+        Firstresponse.handleMouseClick();
+        Secondresponse.handleMouseClick();
+        Thirdresponse.handleMouseClick();
+    
+        
+        
+};
+
+var USAQ = function(){
+    fill(11, 217, 200);
+    rect(50,0,500,600);
+    country[1].flag(100,20);
+    currentCountry=2;
+    
+    var Firstresponse = new Button({
+        x: 200,
+        y: 350,
+        label: "Liberia",
+        onClick: function() {
+            textSize(20);
+            incorrectAnswer(400,400);
+            nextButtonFlag.draw();
+        }
+    });
+    
+    var Secondresponse = new Button({
+        x: 200,
+        y: 410,
+        label: country[1].name,
+        onClick: function() {
+            textSize(20);
+            correctAnswer(450,450);
+            nextButtonFlag.draw();
+        }
+    });
+    
+    var Thirdresponse = new Button({
+        x: 200,
+        y: 470,
+        label: "China",
+        onClick: function() {
+            textSize(20);
+            incorrectAnswer(450,450);
+            nextButtonFlag.draw();
+            
+        }
+    });
+    
+    Firstresponse.draw();
+    Secondresponse.draw();
+    Thirdresponse.draw();
+    Firstresponse.handleMouseClick();
+    Secondresponse.handleMouseClick();
+    Thirdresponse.handleMouseClick();
+    
+};
+
+var RussiaQ = function(){
+    fill(11, 217, 200);
+rect(50,0,500,600);
+    country[2].flag(80,20,125);
+    currentCountry=3;
+    
+    var Firstresponse = new Button({
+    x: 200,
+    y: 350,
+    label: "Slovakia ",
+    onClick: function() {
+        textSize(20);
+        incorrectAnswer(400,400);
+        nextButtonFlag.draw();
+    }
+});
+
+    var Secondresponse = new Button({
+        x: 200,
+        y: 410,
+        label: country[2].name,
+        onClick: function() {
+            textSize(20);
+            correctAnswer(450,450);
+            nextButtonFlag.draw();
+        }
+    });
+    
+    var Thirdresponse = new Button({
+        x: 200,
+        y: 470,
+        label: "Croatia",
+        onClick: function() {
+            textSize(20);
+            incorrectAnswer(450,450);
+            nextButtonFlag.draw();
+            
+        }
+    });
+    
+    Firstresponse.draw();
+    Secondresponse.draw();
+    Thirdresponse.draw();
+    Firstresponse.handleMouseClick();
+    Secondresponse.handleMouseClick();
+    Thirdresponse.handleMouseClick();
+    
+};
+
+var ColombiaQ = function(){
+    fill(11, 217, 200);
+    rect(50,0,500,600);
+    country[3].flag(114,20,110);
+    currentCountry=4;
+    
+    var Firstresponse = new Button({
+        x: 200,
+        y: 350,
+        label: "Venezuela ",
+        onClick: function() {
+            incorrectAnswer(400,400);
+            nextButtonFlag.draw();
+        }
+});
+
+    var Secondresponse = new Button({
+        x: 200,
+        y: 410,
+        label: "Ecuador",
+        onClick: function() {
+            incorrectAnswer(400,400);
+            nextButtonFlag.draw();
+        }
+    });
+    
+    var Thirdresponse = new Button({
+        x: 200,
+        y: 470,
+        label: country[3].name,
+        onClick: function() {
+            correctAnswer(450,450);
+            nextButtonFlag.draw();
+            
+        }
+    });
+    
+    Firstresponse.draw();
+    Secondresponse.draw();
+    Thirdresponse.draw();
+    Firstresponse.handleMouseClick();
+    Secondresponse.handleMouseClick();
+    Thirdresponse.handleMouseClick();
+    
+};
+
+var CubaQ = function(){
+    fill(11, 217, 200);
+    rect(50,0,500,600);
+    country[4].flag(135,20);
+    currentCountry=5;
+    
+    var Firstresponse = new Button({
+    x: 200,
+    y: 350,
+    label: country[4].name,
+    onClick: function() {
+        correctAnswer(450,450);
+        nextButtonFlag.draw();
+    }
+});
+
+    var Secondresponse = new Button({
+        x: 200,
+        y: 410,
+        label: "Puerto Rico",
+        onClick: function() {
+            incorrectAnswer(400,400);
+            nextButtonFlag.draw();
+        }
+    });
+    
+    var Thirdresponse = new Button({
+        x: 200,
+        y: 470,
+        label: "Costa Rica",
+        onClick: function() {
+            incorrectAnswer(450,450);
+            nextButtonFlag.draw();
+            
+        }
+    });
+    
+    Firstresponse.draw();
+    Secondresponse.draw();
+    Thirdresponse.draw();
+    Firstresponse.handleMouseClick();
+    Secondresponse.handleMouseClick();
+    Thirdresponse.handleMouseClick();
+    
+};
+
+var FranceQ = function(){
+    fill(11, 217, 200);
+    rect(50,0,500,600);
+    country[5].flag(110,20,130);
+    currentCountry=6;
+    
+    var Firstresponse = new Button({
+    x: 200,
+    y: 350,
+    label: "Spain",
+    onClick: function() {
+        incorrectAnswer(400,400);
+        nextButtonFlag.draw();
+    }
+});
+
+    var Secondresponse = new Button({
+        x: 200,
+        y: 410,
+        label: country[5].name,
+        onClick: function() {
+            correctAnswer(450,450);
+            nextButtonFlag.draw();
+        }
+    });
+    
+    var Thirdresponse = new Button({
+        x: 200,
+        y: 470,
+        label: "Italy",
+        onClick: function() {
+            incorrectAnswer(450,450);
+            nextButtonFlag.draw();
+            
+        }
+    });
+    
+    Firstresponse.draw();
+    Secondresponse.draw();
+    Thirdresponse.draw();
+    Firstresponse.handleMouseClick();
+    Secondresponse.handleMouseClick();
+    Thirdresponse.handleMouseClick();
+    
+};
+
+var BelgiumQ = function(){
+    fill(11, 217, 200);
+    rect(50,0,500,600);
+    country[6].flag(145,20,130);
+    currentCountry=7;
+    
+    var Firstresponse = new Button({
+    x: 200,
+    y: 350,
+    label: "Netherlands",
+    onClick: function() {
+        incorrectAnswer(400,400);
+        nextButtonFlag.draw();
+    }
+});
+
+    var Secondresponse = new Button({
+        x: 200,
+        y: 410,
+        label: "Germany",
+        onClick: function() {
+            incorrectAnswer(450,450);
+            nextButtonFlag.draw();
+        }
+    });
+    
+    var Thirdresponse = new Button({
+        x: 200,
+        y: 470,
+        label: country[6].name,
+        onClick: function() {
+            correctAnswer(450,450);
+            nextButtonFlag.draw();
+            
+        }
+    });
+    
+    Firstresponse.draw();
+    Secondresponse.draw();
+    Thirdresponse.draw();
+    Firstresponse.handleMouseClick();
+    Secondresponse.handleMouseClick();
+    Thirdresponse.handleMouseClick();
+    
+};
+
+var PolandQ = function(){
+    fill(11, 217, 200);
+    rect(50,0,500,600);
+    country[7].flag(100,20,110);
+    currentCountry=8;
+    
+    var Firstresponse = new Button({
+    x: 200,
+    y: 350,
+    label: country[7].name,
+    onClick: function() {
+        correctAnswer(450,450);
+        nextButtonFlag.draw();
+    }
+});
+
+    var Secondresponse = new Button({
+        x: 200,
+        y: 410,
+        label: "Singapure",
+        onClick: function() {
+            incorrectAnswer(400,400);
+            nextButtonFlag.draw();
+        }
+    });
+    
+    var Thirdresponse = new Button({
+        x: 200,
+        y: 470,
+        label: "Indonesia",
+        onClick: function() {
+            incorrectAnswer(450,450);
+            nextButtonFlag.draw();
+            
+        }
+    });
+    
+    Firstresponse.draw();
+    Secondresponse.draw();
+    Thirdresponse.draw();
+    Firstresponse.handleMouseClick();
+    Secondresponse.handleMouseClick();
+    Thirdresponse.handleMouseClick();
+    
+};
+
+var IraqQ = function(){
+    fill(11, 217, 200);
+    rect(50,0,500,600);
+    country[8].flag(130,20);
+    currentCountry=9;
+    
+    var Firstresponse = new Button({
+    x: 200,
+    y: 350,
+    label: "Egypt",
+    onClick: function() {
+        incorrectAnswer(400,400);
+        nextButtonFlag.draw();
+    }
+});
+
+    var Secondresponse = new Button({
+        x: 200,
+        y: 410,
+        label: "Syria",
+        onClick: function() {
+            incorrectAnswer(450,450);
+            nextButtonFlag.draw();
+        }
+    });
+    
+    var Thirdresponse = new Button({
+        x: 200,
+        y: 470,
+        label: country[8].name,
+        onClick: function() {
+            correctAnswer(450,450);
+            nextButtonFlag.draw();
+            
+        }
+    });
+    
+    Firstresponse.draw();
+    Secondresponse.draw();
+    Thirdresponse.draw();
+    Firstresponse.handleMouseClick();
+    Secondresponse.handleMouseClick();
+    Thirdresponse.handleMouseClick();
+    
+};
+
+var LiberiaQ = function(){
+    fill(11, 217, 200);
+    rect(50,0,500,600);
+    country[9].flag(105,20);
+    currentCountry=10;
+    
+    var Firstresponse = new Button({
+    x: 200,
+    y: 350,
+    label: "Malasya",
+    onClick: function() {
+        incorrectAnswer(400,400);
+        nextButtonFlag.draw();
+    }
+});
+
+    var Secondresponse = new Button({
+        x: 200,
+        y: 410,
+        label: country[9].name,
+        onClick: function() {
+            correctAnswer(450,450);
+            nextButtonFlag.draw();
+        }
+    });
+    
+    var Thirdresponse = new Button({
+        x: 200,
+        y: 470,
+        label: "United States",
+        onClick: function() {
+            incorrectAnswer(450,450);
+            nextButtonFlag.draw();
+            
+        }
+    });
+    
+    Firstresponse.draw();
+    Secondresponse.draw();
+    Thirdresponse.draw();
+    Firstresponse.handleMouseClick();
+    Secondresponse.handleMouseClick();
+    Thirdresponse.handleMouseClick();
+    
+};
+
+var RomaniaQ = function(){
+    fill(11, 217, 200);
+    rect(50,0,500,600);
+    country[10].flag(122,20,120);
+    currentCountry=11;
+    
+    var Firstresponse = new Button({
+    x: 200,
+    y: 350,
+    label: "Chad",
+    onClick: function() {
+        incorrectAnswer(400,400);
+        nextButtonFlag.draw();
+    }
+});
+
+    var Secondresponse = new Button({
+        x: 200,
+        y: 410,
+        label: "Hungary",
+        onClick: function() {
+            incorrectAnswer(450,450);
+            nextButtonFlag.draw();
+        }
+    });
+    
+    var Thirdresponse = new Button({
+        x: 200,
+        y: 470,
+        label: country[10].name,
+        onClick: function() {
+            correctAnswer(450,450);
+            nextButtonFlag.draw();
+            
+        }
+    });
+    
+    Firstresponse.draw();
+    Secondresponse.draw();
+    Thirdresponse.draw();
+    Firstresponse.handleMouseClick();
+    Secondresponse.handleMouseClick();
+    Thirdresponse.handleMouseClick();
+    
+};
+
+var FinlandQ = function(){
+    fill(11, 217, 200);
+    rect(50,0,500,600);
+    country[11].flag(120,20,106);
+    currentCountry=12;
+    
+    var Firstresponse = new Button({
+    x: 200,
+    y: 350,
+    label: "Norway",
+    onClick: function() {
+        incorrectAnswer(400,400);
+        nextButtonFlag.draw();
+    }
+});
+
+    var Secondresponse = new Button({
+        x: 200,
+        y: 410,
+        label: country[11].name,
+        onClick: function() {
+            correctAnswer(450,450);
+            nextButtonFlag.draw();
+        }
+    });
+    
+    var Thirdresponse = new Button({
+        x: 200,
+        y: 470,
+        label: "Denmark",
+        onClick: function() {
+            incorrectAnswer(450,450);
+            nextButtonFlag.draw();
+            
+        }
+    });
+    
+    Firstresponse.draw();
+    Secondresponse.draw();
+    Thirdresponse.draw();
+    Firstresponse.handleMouseClick();
+    Secondresponse.handleMouseClick();
+    Thirdresponse.handleMouseClick();
+    
+};
+
+var IrelandQ = function(){
+    fill(11, 217, 200);
+    rect(50,0,500,600);
+    country[12].flag(125,20,120);
+    currentCountry=13;
+    
+    var Firstresponse = new Button({
+    x: 200,
+    y: 350,
+    label: country[12].name,
+    onClick: function() {
+        correctAnswer(450,450);
+        nextButtonFlag.draw();
+    }
+});
+
+    var Secondresponse = new Button({
+        x: 200,
+        y: 410,
+        label: "Ivory Coast",
+        onClick: function() {
+            incorrectAnswer(400,400);
+            nextButtonFlag.draw();
+        }
+    });
+    
+    var Thirdresponse = new Button({
+        x: 200,
+        y: 470,
+        label: "India",
+        onClick: function() {
+            incorrectAnswer(450,450);
+            nextButtonFlag.draw();
+            
+        }
+    });
+    
+    Firstresponse.draw();
+    Secondresponse.draw();
+    Thirdresponse.draw();
+    Firstresponse.handleMouseClick();
+    Secondresponse.handleMouseClick();
+    Thirdresponse.handleMouseClick();
+    
+};
+
+var ArmeniaQ = function(){
+    fill(11, 217, 200);
+    rect(50,0,500,600);
+    country[13].flag(115,20,100);
+    currentCountry=14;
+    
+    var Firstresponse = new Button({
+    x: 200,
+    y: 350,
+    label: "Colombia",
+    onClick: function() {
+        incorrectAnswer(450,450);
+        nextButtonFlag.draw();
+    }
+});
+
+    var Secondresponse = new Button({
+        x: 200,
+        y: 410,
+        label: "Georgia",
+        onClick: function() {
+            incorrectAnswer(400,400);
+            nextButtonFlag.draw();
+        }
+    });
+    
+    var Thirdresponse = new Button({
+        x: 200,
+        y: 470,
+        label: country[13].name,
+        onClick: function() {
+            correctAnswer(450,450);
+            nextButtonFlag.draw();
+            
+        }
+    });
+    
+    Firstresponse.draw();
+    Secondresponse.draw();
+    Thirdresponse.draw();
+    Firstresponse.handleMouseClick();
+    Secondresponse.handleMouseClick();
+    Thirdresponse.handleMouseClick();
+    
+};
+
+var IndonesiaQ = function(){
+    fill(11, 217, 200);
+    rect(50,0,500,600);
+    country[14].flag(110,20,105);
+    currentCountry=15;
+    
+    var Firstresponse = new Button({
+    x: 200,
+    y: 350,
+    label: country[14].name,
+    onClick: function() {
+        correctAnswer(450,450);
+        nextButtonFlag.draw();
+    }
+});
+
+    var Secondresponse = new Button({
+        x: 200,
+        y: 410,
+        label: "Poland",
+        onClick: function() {
+            incorrectAnswer(400,400);
+            nextButtonFlag.draw();
+        }
+    });
+    
+    var Thirdresponse = new Button({
+        x: 200,
+        y: 470,
+        label: "Monaco",
+        onClick: function() {
+            incorrectAnswer(450,450);
+            nextButtonFlag.draw();
+            
+        }
+    });
+    
+    Firstresponse.draw();
+    Secondresponse.draw();
+    Thirdresponse.draw();
+    Firstresponse.handleMouseClick();
+    Secondresponse.handleMouseClick();
+    Thirdresponse.handleMouseClick();
+    
+};
+
+var GermanyQ = function(){
+    fill(11, 217, 200);
+    rect(50,0,500,600);
+    country[15].flag(115,20,105);
+    currentCountry=16;
+    
+    var Firstresponse = new Button({
+    x: 200,
+    y: 350,
+    label: "Belgium",
+    onClick: function() {
+        incorrectAnswer(450,450);
+        nextButtonFlag.draw();
+    }
+});
+
+    var Secondresponse = new Button({
+        x: 200,
+        y: 410,
+        label: "Austria",
+        onClick: function() {
+            incorrectAnswer(400,400);
+            nextButtonFlag.draw();
+        }
+    });
+    
+    var Thirdresponse = new Button({
+        x: 200,
+        y: 470,
+        label: country[15].name,
+        onClick: function() {
+            correctAnswer(450,450);
+            nextButtonFlag.draw();
+            
+        }
+    });
+    
+    Firstresponse.draw();
+    Secondresponse.draw();
+    Thirdresponse.draw();
+    Firstresponse.handleMouseClick();
+    Secondresponse.handleMouseClick();
+    Thirdresponse.handleMouseClick();
+    
+};
+
+var JapanQ = function(){
+    fill(11, 217, 200);
+    rect(50,0,500,600);
+    country[16].flag(150,20);
+    currentCountry=17;
+    
+    var Firstresponse = new Button({
+    x: 200,
+    y: 350,
+    label: "Korea",
+    onClick: function() {
+        incorrectAnswer(450,450);
+        nextButtonFlag.draw();
+    }
+});
+
+    var Secondresponse = new Button({
+        x: 200,
+        y: 410,
+        label: "China",
+        onClick: function() {
+            incorrectAnswer(400,400);
+            nextButtonFlag.draw();
+        }
+    });
+    
+    var Thirdresponse = new Button({
+        x: 200,
+        y: 470,
+        label: country[16].name,
+        onClick: function() {
+            correctAnswer(450,450);
+            nextButtonFlag.draw();
+            
+        }
+    });
+    
+    Firstresponse.draw();
+    Secondresponse.draw();
+    Thirdresponse.draw();
+    Firstresponse.handleMouseClick();
+    Secondresponse.handleMouseClick();
+    Thirdresponse.handleMouseClick();
+    
+};
+
+var IvoryCoastQ = function(){
+    fill(11, 217, 200);
+    rect(50,0,500,600);
+    country[17].flag(150,20);
+    currentCountry=18;
+    
+    var Firstresponse = new Button({
+    x: 200,
+    y: 350,
+    label: "Ghana",
+    onClick: function() {
+        incorrectAnswer(450,450);
+        nextButtonFlag.draw();
+    }
+});
+
+    var Secondresponse = new Button({
+        x: 200,
+        y: 410,
+        label: country[17].name,
+        onClick: function() {
+            correctAnswer(450,450);
+            nextButtonFlag.draw();
+        }
+    });
+    
+    var Thirdresponse = new Button({
+        x: 200,
+        y: 470,
+        label: "Ireland",
+        onClick: function() {
+            incorrectAnswer(400,400);
+            nextButtonFlag.draw();
+            
+        }
+    });
+    
+    Firstresponse.draw();
+    Secondresponse.draw();
+    Thirdresponse.draw();
+    Firstresponse.handleMouseClick();
+    Secondresponse.handleMouseClick();
+    Thirdresponse.handleMouseClick();
+    
+};
+
+var PeruQ = function(){
+    fill(11, 217, 200);
+    rect(50,0,500,600);
+    country[18].flag(150,20);
+    currentCountry=19;
+    
+    var Firstresponse = new Button({
+    x: 200,
+    y: 350,
+    label: country[18].name,
+    onClick: function() {
+        correctAnswer(450,450);
+        nextButtonFlag.draw();
+    }
+});
+
+    var Secondresponse = new Button({
+        x: 200,
+        y: 410,
+        label: "Bolivia",
+        onClick: function() {
+            incorrectAnswer(450,450);
+            nextButtonFlag.draw();
+        }
+    });
+    
+    var Thirdresponse = new Button({
+        x: 200,
+        y: 470,
+        label: "Chile",
+        onClick: function() {
+            incorrectAnswer(400,400);
+            nextButtonFlag.draw();
+            
+        }
+    });
+    
+    Firstresponse.draw();
+    Secondresponse.draw();
+    Thirdresponse.draw();
+    Firstresponse.handleMouseClick();
+    Secondresponse.handleMouseClick();
+    Thirdresponse.handleMouseClick();
+    
+};
+
+var LaosQ = function(){
+    fill(11, 217, 200);
+    rect(50,0,500,600);
+    country[19].flag(115,20,100);
+    currentCountry=20;
+    
+    var Firstresponse = new Button({
+    x: 200,
+    y: 350,
+    label: "Tailand",
+    onClick: function() {
+        incorrectAnswer(400,400);
+        nextButtonFlag.draw();
+    }
+});
+
+    var Secondresponse = new Button({
+        x: 200,
+        y: 410,
+        label: "Cambodia",
+        onClick: function() {
+            incorrectAnswer(450,450);
+            nextButtonFlag.draw();
+        }
+    });
+    
+    var Thirdresponse = new Button({
+        x: 200,
+        y: 470,
+        label: country[19].name,
+        onClick: function() {
+            correctAnswer(450,450);
+            nextButtonFlag.draw();
+            
+        }
+    });
+    
+    Firstresponse.draw();
+    Secondresponse.draw();
+    Thirdresponse.draw();
+    Firstresponse.handleMouseClick();
+    Secondresponse.handleMouseClick();
+    Thirdresponse.handleMouseClick();
+    
+};
+
+var Question1 = function(){
+background(212, 224, 42);
+textSize(30);
+fill(0, 0, 0);
+text("When did World War II come to an end?",10,65);
+
+textSize(28);
+text("A)",15,175);
+text("B)",15,235);
+text("C)",15,295);
+textSize(25);
+
+var Firstresponse = new Button({
+    x: 50,
+    y: 150,
+    width:185,
+    height:50,
+    label: "1942",
+    onClick: function() {
+        text("That’s incorrect. In 1942, the United States entered the war",10,410);
+        text("after Japan attacked Pearl Harbor.",20,435);
+        drawBitmoji(80,540,50);
+        line(100,500,130,475);
+        nextButtonQuestion.draw();
+    }
+});
+
+var Secondresponse = new Button({
+        x: 50,
+        y: 210,
+        width:185,
+        height:50,
+        label: "1945",
+        onClick: function() {
+        
+           text("That's correct. The War in Europe ended May 8 1945, while",10,410);
+           text("the War on the Pacific continue for a few more months",20,435);
+           text("ending in September 2 1945",30,460);
+          drawBitmoji(80,540,50);
+          line(100,500,130,475);
+            nextButtonQuestion.draw();
+        }
+    });
+    
+var Thirdresponse = new Button({
+        x: 50,
+        y: 270,
+        width:185,
+        height:50,
+        label: "1933",
+        onClick: function() {
+            text("That’s incorrect. In 1933, Germany invaded Poland, and England ",10,410);
+           text("and France declared war on Germany, starting WW2.",20,435);
+           drawBitmoji(80,540,50);
+          line(100,500,130,475);
+            nextButtonQuestion.draw();
+            
+        }
+    });
+    
+    Firstresponse.draw();
+    Secondresponse.draw();
+    Thirdresponse.draw();
+    Firstresponse.handleMouseClick();
+    Secondresponse.handleMouseClick();
+    Thirdresponse.handleMouseClick();
+
+
+
+};
+
+var Question2 = function(){
+    
+background(212, 224, 42);
+textSize(25);
+fill(0, 0, 0);
+text("Roman History is divided by three periods,",10,35);
+text("the Monarchy, the Republic, and the Empire.",10,65);
+text("Which event led to the end of the Roman Republic?",10,95);
+
+textSize(28);
+text("A)",15,175);
+text("B)",15,235);
+text("C)",15,295);
+textSize(25);
+
+
+
+
+var Firstresponse = new Button({
+    x: 50,
+    y: 150,
+    width:285,
+    height:50,
+    label: "Assasination of Julius Caesar",
+    onClick: function() {
+        text("That’s correct. The assassination of Julius Caesar by the Senate",10,410);
+           text(" in 44 BCE divided Rome and led to civil war, with the victors",20,435);
+           text("forming the Roman Empire.",30,460);
+           drawBitmoji(80,540,50);
+          line(100,500,130,475);
+        nextButtonQuestion.draw();
+    }
+});
+
+
+
+var Secondresponse = new Button({
+        x: 50,
+        y: 210,
+        width:285,
+        height:50,
+        label: "Second Punic War",
+        onClick: function() {
+        text("That’s incorrect. Even though Rome almost lost most of its",10,410);
+           text(" territory in the Second Punic War, Rome recovered ",20,435);
+           text("and strengthened the republic.",30,460);    
+            drawBitmoji(80,540,50);
+          line(100,500,130,475);
+            nextButtonQuestion.draw();
+        }
+    });
+    
+var Thirdresponse = new Button({
+        x: 50,
+        y: 270,
+        width:285,
+        height:50,
+        label: "Roman Civil War",
+        onClick: function() {
+            text("That’s incorrect. During the Roman Civil War, the Senate defeated  ",10,410);
+           text("its adversaries and maintained a strong republic.",20,435);
+           drawBitmoji(80,540,50);
+          line(100,500,130,475);
+            nextButtonQuestion.draw();
+            
+        }
+    });
+    
+    Firstresponse.draw();
+    Secondresponse.draw();
+    Thirdresponse.draw();
+    Firstresponse.handleMouseClick();
+    Secondresponse.handleMouseClick();
+    Thirdresponse.handleMouseClick();
+
+
+
+};
+
+var Question3 = function(){
+    
+background(212, 224, 42);
+textSize(25);
+fill(0, 0, 0);
+text("Which event let Christopher Columbus to search",10,35);
+text("for another route to India?",20,65);
+
+textSize(28);
+text("A)",15,175);
+text("B)",15,235);
+text("C)",15,295);
+textSize(25);
+
+
+var Firstresponse = new Button({
+    x: 50,
+    y: 150,
+    width:285,
+    height:50,
+    label: "The Reconquista",
+    onClick: function() {
+        text("That’s incorrect. During the Reconquista, the Kingdoms of ",10,410);
+           text("Castille and Aragon fought the Caliphate to recover",20,435);
+           text("the Iberian Peninsula.",30,460);   
+        drawBitmoji(80,540,50);
+          line(100,500,130,475);
+        nextButtonQuestion.draw();
+    }
+});
+
+var Secondresponse = new Button({
+        x: 50,
+        y: 210,
+        width:285,
+        height:50,
+        label: "Hundred Years' War",
+        onClick: function() {
+            text("TThat’s incorrect. The Hundred Years' War was fought between",10,410);
+           text("England and France. ",20,435);
+           drawBitmoji(80,540,50);
+          line(100,500,130,475);
+            nextButtonQuestion.draw();
+        }
+    });
+    
+    
+    
+var Thirdresponse = new Button({
+        x: 50,
+        y: 270,
+        width:285,
+        height:50,
+        label: "Fall of Constantinople",
+        onClick: function() {
+            text("That’s correct. When Constantinople fell to the Ottoman Empire, ",10,410);
+           text("the route to India was controlled by them, imposing high taxes,  ",20,435);
+           text("and forcing the Europeans to look for alternative routes.",30,460);  
+           drawBitmoji(80,540,50);
+          line(100,500,130,475);
+            nextButtonQuestion.draw();
+            
+        }
+    });
+    
+    Firstresponse.draw();
+    Secondresponse.draw();
+    Thirdresponse.draw();
+    Firstresponse.handleMouseClick();
+    Secondresponse.handleMouseClick();
+    Thirdresponse.handleMouseClick();
+
+
+
+};
+
+var Question4 = function(){
+    
+background(212, 224, 42);
+textSize(25);
+fill(0, 0, 0);
+text("In which day was the Declaration of Independence ",10,35);
+text("of the United States of America signed?",20,65);
+
+textSize(28);
+text("A)",15,175);
+text("B)",15,235);
+text("C)",15,295);
+textSize(25);
+
+
+var Firstresponse = new Button({
+    x: 50,
+    y: 150,
+    width:285,
+    height:50,
+    label: "July 4, 1776",
+    onClick: function() {
+        
+        text("That’s incorrect. On July 4, 1776, the Congressional Congress   ",10,410);
+           text("declared independence for the 13 colonies.",20,435);
+           drawBitmoji(80,540,50);
+          line(100,500,130,475);
+        nextButtonQuestion.draw();
+    }
+});
+
+var Secondresponse = new Button({
+        x: 50,
+        y: 210,
+        width:285,
+        height:50,
+        label: "August 2, 1776",
+        onClick: function() {
+            text("That’s correct. On August 2, 1776, the Congressional Congress  ",10,410);
+           text("signed the Declaration of Independence.",20,435);
+           drawBitmoji(80,540,50);
+          line(100,500,130,475);
+            nextButtonQuestion.draw();
+        }
+    });
+    
+    
+   
+    
+var Thirdresponse = new Button({
+        x: 50,
+        y: 270,
+        width:285,
+        height:50,
+        label: "September 1, 1776",
+        onClick: function() {
+            text("That’s incorrect. On September 9, 1776, the Continental Congress",10,410);
+           text("officially named the Union of States the United States. ",20,435);
+           drawBitmoji(80,540,50);
+          line(100,500,130,475);
+            nextButtonQuestion.draw();
+            
+        }
+    });
+    
+    Firstresponse.draw();
+    Secondresponse.draw();
+    Thirdresponse.draw();
+    Firstresponse.handleMouseClick();
+    Secondresponse.handleMouseClick();
+    Thirdresponse.handleMouseClick();
+
+
+
+};
+
+var Question5 = function(){
+    
+background(212, 224, 42);
+textSize(25);
+fill(0, 0, 0);
+text("Modern-day Istanbul, Turkey, used to be called what",10,35);
+text(" when it was the capital of the Byzantine Empire?",20,65);
+
+textSize(28);
+text("A)",15,175);
+text("B)",15,235);
+text("C)",15,295);
+textSize(25);
+
+
+var Firstresponse = new Button({
+    x: 50,
+    y: 150,
+    width:285,
+    height:50,
+    label: "Constantinople",
+    onClick: function() {
+        text("That’s correct. Constantinople was the name of the capital of",10,410);
+           text(" the Byzantine Empire.",20,435);
+           drawBitmoji(80,540,50);
+          line(100,500,130,475);
+        nextButtonQuestion.draw();
+    }
+});
+
+var Secondresponse = new Button({
+        x: 50,
+        y: 210,
+        width:285,
+        height:50,
+        label: "Anatolia",
+        onClick: function() {
+            
+            text("That’s incorrect. Anatolia was the name given by the ancient ",10,410);
+           text("Greeks to modern-day Turkey.",20,435);
+           drawBitmoji(80,540,50);
+          line(100,500,130,475);
+            nextButtonQuestion.draw();
+        }
+    });
+    
+var Thirdresponse = new Button({
+        x: 50,
+        y: 270,
+        width:285,
+        height:50,
+        label: "Antioch",
+        onClick: function() {
+            
+            text("That’s incorrect. Antioch was the regional capital of the ",10,410);
+           text(" Byzantine Empire.",20,435);
+           drawBitmoji(80,540,50);
+          line(100,500,130,475);
+            nextButtonQuestion.draw();
+            
+        }
+    });
+    
+    Firstresponse.draw();
+    Secondresponse.draw();
+    Thirdresponse.draw();
+    Firstresponse.handleMouseClick();
+    Secondresponse.handleMouseClick();
+    Thirdresponse.handleMouseClick();
+
+
+
+};
+
+var Question6 = function(){
+    
+background(212, 224, 42);
+textSize(25);
+fill(0, 0, 0);
+text("The iPhone revolutionized how we use phones.",10,35);
+text("In which year was the iPhone released?",20,65);
+
+textSize(28);
+text("A)",15,175);
+text("B)",15,235);
+text("C)",15,295);
+textSize(25);
+
+
+var Firstresponse = new Button({
+    x: 50,
+    y: 150,
+    width:285,
+    height:50,
+    label: "2008",
+    onClick: function() {
+        text("That’s incorrect. In 2008, Apple introduced the iPhone 3G, ",10,410);
+           text("the second generation of the iPhone.",20,435);
+           drawBitmoji(80,540,50);
+          line(100,500,130,475);
+        nextButtonQuestion.draw();
+    }
+});
+
+var Secondresponse = new Button({
+        x: 50,
+        y: 210,
+        width:285,
+        height:50,
+        label: "2006",
+        onClick: function() {
+            text("That’s incorrect. In 2006, Apple introduced the iPod Nano.",10,410);
+            drawBitmoji(80,540,50);
+          line(100,500,130,475);
+            nextButtonQuestion.draw();
+        }
+    });
+    
+var Thirdresponse = new Button({
+        x: 50,
+        y: 270,
+        width:285,
+        height:50,
+        label: "2007",
+        onClick: function() {
+            text("That’s correct. In 2007, Apple introduced and released the first ",10,410);
+           text("smartphone on the market, the iPhone.",20,435);
+           drawBitmoji(80,540,50);
+          line(100,500,130,475);
+            nextButtonQuestion.draw();
+            
+        }
+    });
+    
+    Firstresponse.draw();
+    Secondresponse.draw();
+    Thirdresponse.draw();
+    Firstresponse.handleMouseClick();
+    Secondresponse.handleMouseClick();
+    Thirdresponse.handleMouseClick();
+
+
+
+};  
+   
+var Question7 = function(){
+    
+background(212, 224, 42);
+textSize(25);
+fill(0, 0, 0);
+text("Which was the first settlement established in the",10,35);
+text("New World by the Europeans?",20,65);
+
+textSize(28);
+text("A)",15,175);
+text("B)",15,235);
+text("C)",15,295);
+textSize(25);
+
+
+var Firstresponse = new Button({
+    x: 50,
+    y: 150,
+    width:285,
+    height:50,
+    label: "Santa Maria",
+    onClick: function() {
+        text("That’s incorrect. The Santa Maria was one of the three ships on",10,410);
+           text(" which Christopher Columbus made his first voyage in 1492.",20,435);
+        drawBitmoji(80,540,50);
+          line(100,500,130,475);
+        nextButtonQuestion.draw();
+    }
+});
+
+var Secondresponse = new Button({
+        x: 50,
+        y: 210,
+        width:285,
+        height:50,
+        label: "La Isabela",
+        onClick: function() {
+            text("That’s correct. La Isabela, located in the modern-day ",10,410);
+           text("Dominican Republic, was the first permanent settlement ",20,435);
+           text("established in 1493 by Europeans in the New World.",30,460); 
+           drawBitmoji(80,540,50);
+          line(100,500,130,475);
+            nextButtonQuestion.draw();
+        }
+    });
+    
+var Thirdresponse = new Button({
+        x: 50,
+        y: 270,
+        width:285,
+        height:50,
+        label: "Jamestown",
+        onClick: function() {
+            nextButtonQuestion.draw();
+            text("That’s incorrect. Jamestown was the first permanent English",10,410);
+           text(" settlement in the New World. Established in 1607.",20,435);
+           drawBitmoji(80,540,50);
+          line(100,500,130,475);
+        }
+    });
+    
+    Firstresponse.draw();
+    Secondresponse.draw();
+    Thirdresponse.draw();
+    Firstresponse.handleMouseClick();
+    Secondresponse.handleMouseClick();
+    Thirdresponse.handleMouseClick();
+
+
+
+};   
+   
+var Question8 = function(){
+    
+background(212, 224, 42);
+textSize(25);
+fill(0, 0, 0);
+text("WW1 was called The Great War as a globalized",10,35);
+text("society engaged in conflict.",20,65);
+text("Which event led to WW1?",30,95);
+
+textSize(28);
+text("A)",15,175);
+text("B)",15,235);
+text("C)",15,295);
+textSize(25);
+
+
+var Firstresponse = new Button({
+    x: 50,
+    y: 150,
+    width:300,
+    height:50,
+    label: "Assasination of Franz Ferdinand",
+    onClick: function() {
+        text("That’s correct. Archduke Franz Ferdinand's assassination    ",10,410);
+           text("was the crucial event that led to WWI. ",20,435);
+           drawBitmoji(80,540,50);
+          line(100,500,130,475);
+        nextButtonQuestion.draw();
+    }
+});
+
+var Secondresponse = new Button({
+        x: 50,
+        y: 210,
+        width:300,
+        height:50,
+        label: "Russian Revolution",
+        onClick: function() {
+            text("That’s incorrect. The Russian Revolution was a result of the  ",10,410);
+           text("poor conditions of the Russian population during WW1.",20,435);
+           drawBitmoji(80,540,50);
+          line(100,500,130,475);
+            nextButtonQuestion.draw();
+        }
+    });
+    
+var Thirdresponse = new Button({
+        x: 50,
+        y: 270,
+        width:300,
+        height:50,
+        label: "Germany invades Poland",
+        onClick: function() {
+            
+            text("That’s incorrect. The invasion of Poland by Germany was ",10,410);
+           text("in 1933 causing WW2.",20,435);
+           drawBitmoji(80,540,50);
+          line(100,500,130,475);
+            nextButtonQuestion.draw();
+            
+        }
+    });
+    
+    Firstresponse.draw();
+    Secondresponse.draw();
+    Thirdresponse.draw();
+    Firstresponse.handleMouseClick();
+    Secondresponse.handleMouseClick();
+    Thirdresponse.handleMouseClick();
+
+
+
+};   
+ 
+var Question9 = function(){
+    
+background(212, 224, 42);
+textSize(25);
+fill(0, 0, 0);
+text("Communication changed when using the mobile",10,35);
+text("phone. In which year did the first mobile ",20,65);
+text("phone release?",30,95);
+
+textSize(28);
+text("A)",15,175);
+text("B)",15,235);
+text("C)",15,295);
+textSize(25);
+
+
+var Firstresponse = new Button({
+    x: 50,
+    y: 150,
+    width:285,
+    height:50,
+    label: "1982",
+    onClick: function() {
+        nextButtonQuestion.draw();
+        text("That’s correct",20,435);
+        drawBitmoji(80,540,50);
+          line(100,500,130,475);
+    }
+});
+
+var Secondresponse = new Button({
+        x: 50,
+        y: 210,
+        width:285,
+        height:50,
+        label: "1983",
+        onClick: function() {
+            text("That’s incorrect",20,435);
+            nextButtonQuestion.draw();
+            drawBitmoji(80,540,50);
+          line(100,500,130,475);
+        }
+    });
+    
+var Thirdresponse = new Button({
+        x: 50,
+        y: 270,
+        width:285,
+        height:50,
+        label: "1985",
+        onClick: function() {
+            text("That’s incorrect",20,435);
+            nextButtonQuestion.draw();
+            drawBitmoji(80,540,50);
+          line(100,500,130,475);
+            
+        }
+    });
+    
+    Firstresponse.draw();
+    Secondresponse.draw();
+    Thirdresponse.draw();
+    Firstresponse.handleMouseClick();
+    Secondresponse.handleMouseClick();
+    Thirdresponse.handleMouseClick();
+
+
+
+}; 
+ 
+var Question10 = function(){
+    
+background(212, 224, 42);
+textSize(25);
+fill(0, 0, 0);
+text("In which state did the Mayflower arrive?",20,65);
+
+textSize(28);
+text("A)",15,175);
+text("B)",15,235);
+text("C)",15,295);
+textSize(25);
+
+
+var Firstresponse = new Button({
+    x: 50,
+    y: 150,
+    width:285,
+    height:50,
+    label: "Virginia",
+    onClick: function() {
+        text("That’s incorrect. The first settlement in Virgina was Jamestown ",10,410);
+            text("in 1607.",20,435);
+        drawBitmoji(80,540,50);
+          line(100,500,130,475);
+        nextButtonQuestion.draw();
+    }
+});
+
+var Secondresponse = new Button({
+        x: 50,
+        y: 210,
+        width:285,
+        height:50,
+        label: "Rhode Island",
+        onClick: function() {
+            text("That’s incorrect. The first settlement in Rhode Island was formed",10,410);
+            text("by Roger Williams in 1636.",20,435);
+            drawBitmoji(80,540,50);
+          line(100,500,130,475);
+            nextButtonQuestion.draw();
+        }
+    });
+    
+var Thirdresponse = new Button({
+        x: 50,
+        y: 270,
+        width:285,
+        height:50,
+        label: "Massachusetts",
+        onClick: function() {
+            text("That’s correct. The Mayflower arrived in 1620 on what today is ",10,410);
+           text(" Cape Cod,Massachusetts.",20,435);
+            drawBitmoji(80,540,50);
+          line(100,500,130,475);
+            nextButtonQuestion.draw();
+            
+        }
+    });
+    
+    Firstresponse.draw();
+    Secondresponse.draw();
+    Thirdresponse.draw();
+    Firstresponse.handleMouseClick();
+    Secondresponse.handleMouseClick();
+    Thirdresponse.handleMouseClick();
+
+
+
+}; 
+
+
+
+/*
+The functions for the flag game are called depending on the currentCountry variable. 
+
+The functions for the question are called Question 1-10.
+
+The functions are called and not the draw and handleMouseClick methods for the answers buttons, because the objects are local variables to their main functions.
+
+*/
+
+//mouseClicked Function
+mouseClicked = function(){
+    nextButtonFlag.handleMouseClick();
+    nextButtonQuestion.handleMouseClick();
+    RestartButton.handleMouseClick();
+    if (currentCountry===0 || currentQuestion===0){
+        splashScreen();
+        HistoryButton.handleMouseClick();
+        FlagButton.handleMouseClick();
+    }
+    if (currentCountry===1){
+        DOMQ();
+    } else if (currentCountry===2){
+       USAQ();
+    }else if (currentCountry===3){
+       RussiaQ();
+    }else if (currentCountry===4){
+       ColombiaQ();
+    }else if (currentCountry===5){
+       CubaQ();
+    }else if (currentCountry===6){
+       FranceQ();
+    }else if (currentCountry===7){
+       BelgiumQ();
+    }else if (currentCountry===8){
+       PolandQ();
+    }else if (currentCountry===9){
+       IraqQ();
+    }else if (currentCountry===10){
+       LiberiaQ();
+    }else if (currentCountry===11){
+       RomaniaQ();
+    }else if (currentCountry===12){
+        FinlandQ();
+    }else if (currentCountry===13){
+        IrelandQ();
+    }else if (currentCountry===14){
+        ArmeniaQ();
+    }else if (currentCountry===15){
+        IndonesiaQ();
+    }else if (currentCountry===16){
+        GermanyQ();
+    }else if (currentCountry===17){
+        JapanQ();
+    }else if (currentCountry===18){
+        IvoryCoastQ();
+    }else if (currentCountry===19){
+        PeruQ();
+    }else if (currentCountry===20){
+        LaosQ();
+    }else if (numbersFlag.length===0){
+        endScreen();
+    }
+    
+    
+    if (currentQuestion===1){
+        Question1();
+    }else if (currentQuestion===2){
+        Question2();
+    }else if (currentQuestion===3){
+        Question3();
+    }else if (currentQuestion===4){
+        Question4();
+    }else if (currentQuestion===5){
+        Question5();
+    }else if (currentQuestion===6){
+        Question6();
+    }else if (currentQuestion===7){
+        Question7();
+    }else if (currentQuestion===8){
+        Question8();
+    }else if (currentQuestion===9){
+        Question9();
+    }else if (currentQuestion===10){
+        Question10();
+    }else if (numbersQuestion.length===0){
+        endScreen();
+    }
+    
+    
+    
+ 
+};
+   
+//Draw function
+draw= function() {
+    background(255, 255, 255);
+     
+    if (currentCountry===0 || currentQuestion===0){
+        splashScreen();
+    }
+    if (currentCountry===1){
+        DOMQ();
+    } else if (currentCountry===2){
+       USAQ();
+    }else if (currentCountry===3){
+       RussiaQ();
+    }else if (currentCountry===4){
+       ColombiaQ();
+    }else if (currentCountry===5){
+       CubaQ();
+    }else if (currentCountry===6){
+       FranceQ();
+    }else if (currentCountry===7){
+       BelgiumQ();
+    }else if (currentCountry===8){
+       PolandQ();
+    }else if (currentCountry===9){
+       IraqQ();
+    }else if (currentCountry===10){
+       LiberiaQ();
+    }else if (currentCountry===11){
+       RomaniaQ();
+    }else if (currentCountry===12){
+        FinlandQ();
+    }else if (currentCountry===13){
+        IrelandQ();
+    }else if (currentCountry===14){
+        ArmeniaQ();
+    }else if (currentCountry===15){
+        IndonesiaQ();
+    }else if (currentCountry===16){
+        GermanyQ();
+    }else if (currentCountry===17){
+        JapanQ();
+    }else if (currentCountry===18){
+        IvoryCoastQ();
+    }else if (currentCountry===19){
+        PeruQ();
+    }else if (currentCountry===20){
+        LaosQ();
+    }else if (numbersFlag.length===0){
+        endScreen();
+    }
+    
+     if (currentQuestion===1){
+        Question1();
+    }else if (currentQuestion===2){
+        Question2();
+    }else if (currentQuestion===3){
+        Question3();
+    }else if (currentQuestion===4){
+        Question4();
+    }else if (currentQuestion===5){
+        Question5();
+    }else if (currentQuestion===6){
+        Question6();
+    }else if (currentQuestion===7){
+        Question7();
+    }else if (currentQuestion===8){
+        Question8();
+    }else if (currentQuestion===9){
+        Question9();
+    }else if (currentQuestion===10){
+        Question10();
+    }else if (numbersQuestion.length===0){
+        endScreen();
+    }
+    
+    
+    noLoop();
+
+ };
